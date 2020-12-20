@@ -10,10 +10,10 @@ import org.springframework.context.annotation.ComponentScan;
 //Program Description:  Image Hoster Website let the users upload the images
 // and put comments on other user's images after registering to Website.
 //**************************************************************************
-//Modification:
-//Modified By:
-//Date:
-//Change Details:
+//Modification: Issue#1 - Fixed the issue related to error occurred while
+//                        navigating the two imgaes with same title.
+//Modified By:            Sunil Srivastava
+//Date:                   18/12/2020
 //***************************************************************************
 
 @SpringBootApplication
