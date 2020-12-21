@@ -15,7 +15,12 @@ import org.springframework.context.annotation.ComponentScan;
 //Modified By:            Sunil Srivastava
 //Date:                   18/12/2020
 //***************************************************************************
-
+//Modification: Issue#2 - Fixed the issue related to edit/delete the images.
+//                        Only Owner of the image should be allowed to do the
+//                        changes else show the appropriate message on screen
+//Modified By:            Sunil Srivastava
+//Date:                   18/12/2020
+//***************************************************************************
 @SpringBootApplication
 public class ImageHosterApplication {
     public static void main(String[] args) {
