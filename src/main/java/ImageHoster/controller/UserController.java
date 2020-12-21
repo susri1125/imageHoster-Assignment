@@ -47,7 +47,6 @@ public class UserController {
         String[] partialRegexChecks = { ".*[a-zA-Z]+.*",".*[0-9]+.*",".*[!@#$%^&*(),.?:{}|<>]+.*"};// Check Alphabets, Check numeric numbers & check special characters
 
 
-        //Boolean isValid = (password.matches(partialRegexChecks[0]) &&  (password.matches(partialRegexChecks[1]) && password.matches(partialRegexChecks[2])));
         String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
         if((password.matches(partialRegexChecks[0]) &&  (password.matches(partialRegexChecks[1]) && password.matches(partialRegexChecks[2])))) {
             userService.registerUser(user);

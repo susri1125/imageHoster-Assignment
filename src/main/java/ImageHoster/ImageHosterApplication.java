@@ -29,7 +29,15 @@ import org.springframework.context.annotation.ComponentScan;
 //Modified By:                  Sunil Srivastava
 //Date:                         21/12/2020
 //****************************************************************************
+//Modification: New Feature#2 - Comments : Add comment box where a user can
+//                              add a comment to any image in the application
+//                              after he is logged in the application
+//Modified By:                  Sunil Srivastava
+//Date:                         21/12/2020
+//****************************************************************************
 @SpringBootApplication
+@ComponentScan
+@EnableAutoConfiguration
 public class ImageHosterApplication {
     public static void main(String[] args) {
         SpringApplication.run(ImageHosterApplication.class, args);
