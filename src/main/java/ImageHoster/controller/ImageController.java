@@ -1,9 +1,10 @@
 package ImageHoster.controller;
 
-
+import ImageHoster.model.Comment;
 import ImageHoster.model.Image;
 import ImageHoster.model.Tag;
 import ImageHoster.model.User;
+import ImageHoster.service.CommentService;
 import ImageHoster.service.ImageService;
 import ImageHoster.service.TagService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,9 @@ public class ImageController {
     @Autowired
     private TagService tagService;
 
+    @Autowired(required = true)
+    private CommentService commentService;
+
     //This method displays all the images in the user home page after successful login
     @RequestMapping("images")
     public String getUserImages(Model model) {
@@ -54,9 +58,10 @@ public class ImageController {
     public String showImage(@PathVariable("imageId") Integer id, @PathVariable("title") String title, Model model) {
         Image image = imageService.getImage(id);       //get the Image ID
         model.addAttribute("image", image);
-        //End of Fix of Issue#1 by Sunil Srivastava on 18/12/2020
-
         model.addAttribute("tags", image.getTags());
+        List<Comment> commentList = commentService.getAllComments(image.getId(), image.getTitle());
+        model.addAttribute("comments", commentList);
+        //End of Fix of Issue#1 & New Feature#2 by Sunil Srivastava on 21/12/2020
         return "images/image";
     }
 
@@ -102,7 +107,7 @@ public class ImageController {
     //Start of Fix of Issue#2 by Sunil Srivastava on 18/12/2020
     @RequestMapping(value = "/editImage")
     public String editImage(@RequestParam("imageId") Integer imageId, Model model, HttpSession session,
-        final RedirectAttributes redirectAttributes) {
+                            final RedirectAttributes redirectAttributes) {
         Image image = imageService.getImage(imageId);
 
         String error = "Only the owner of the image can edit the image";
