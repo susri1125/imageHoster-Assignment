@@ -10,6 +10,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
@@ -40,9 +41,23 @@ public class UserController {
     //This controller method is called when the request pattern is of type 'users/registration' and also the incoming request is of POST type
     //This method calls the business logic and after the user record is persisted in the database, directs to login page
     @RequestMapping(value = "users/registration", method = RequestMethod.POST)
-    public String registerUser(User user) {
-        userService.registerUser(user);
-        return "redirect:/users/login";
+    //Start of New Feature#1 by Sunil Srivastava on 21/12/2020
+    public String registerUser(User user, Model model, final RedirectAttributes redirectAttributes) {
+        String password = user.getPassword();
+        String[] partialRegexChecks = { ".*[a-zA-Z]+.*",".*[0-9]+.*",".*[!@#$%^&*(),.?:{}|<>]+.*"};// Check Alphabets, Check numeric numbers & check special characters
+
+
+        //Boolean isValid = (password.matches(partialRegexChecks[0]) &&  (password.matches(partialRegexChecks[1]) && password.matches(partialRegexChecks[2])));
+        String error = "Password must contain atleast 1 alphabet, 1 number & 1 special character";
+        if((password.matches(partialRegexChecks[0]) &&  (password.matches(partialRegexChecks[1]) && password.matches(partialRegexChecks[2])))) {
+            userService.registerUser(user);
+            return "users/login";
+        }else {
+            redirectAttributes.addAttribute("passwordTypeError", error);
+            model.addAttribute("passwordTypeError", error);
+            redirectAttributes.addFlashAttribute("passwordTypeError", error);
+            return "redirect:/users/registration";
+        } //End of New Feature#1 by Sunil Srivastava on 21/12/2020
     }
 
     //This controller method is called when the request pattern is of type 'users/login'
